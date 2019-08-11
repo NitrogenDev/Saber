@@ -24,16 +24,17 @@ async def SetStaffRole(ctx):
                         await ctx.send('**'+ctx.message.content.strip('s!SetStaffRole ')+'** is not a valid role!')
 
 @client.command(pass_context=True)
-async def ReactionRole(ctx, MessageId, role):
+async def ReactionRole(ctx, MessageId, role, EmoteID):
     msg = await ctx.message.channel.fetch_message(int(MessageId))
     if msg:
-        await msg.add_reaction(emoji=u"\U0001F534")
+        await msg.add_reaction(emoji=EmoteID)
         feed = {}
         feed['MessageID'] = str(MessageId)
         feed['Role'] = role
+        feed['EmoteID'] = EmoteID
         ReactionMessagesData['Messages'].append(feed)
         await UpdateReactionMessages()
-    await ctx.message.delete()
+        await ctx.message.delete()
 
 @client.command(pass_context=True)
 async def SetJoinChannel(ctx, id):
